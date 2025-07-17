@@ -363,3 +363,9 @@ def custom_openapi():
 app.openapi = custom_openapi
 
 # FastAPI automatic interactive docs enabled at /docs
+
+# --- Add explicit server launch block for local/script/CI ---
+if __name__ == "__main__":
+    import uvicorn
+    # Bind to all interfaces on port 3001 (network-accessible in Docker/K8s/cloud) by default
+    uvicorn.run("src.api.main:app", host="0.0.0.0", port=3001, reload=True, log_level="info")
